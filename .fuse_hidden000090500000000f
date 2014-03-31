@@ -110,8 +110,8 @@ class PlankConfigWindow : ApplicationWindow {
         this.border_width = 10;
 
         Gtk.HeaderBar headerBar = new Gtk.HeaderBar ();
-        headerBar.set_title ("Plank Configuration");
-        headerBar.set_show_close_button (true);
+        headerBar.set_title ("Titel");
+        headerBar.set_subtitle ("Untertitel");
 
         this.set_titlebar(headerBar);
 
@@ -142,20 +142,20 @@ class PlankConfigWindow : ApplicationWindow {
         icon_custome_size.set_sensitive(false);
         icon_custome_size.set_value (current);
 
-
-
-
         if (current != 32 && current != 48 && current != 64 && current != 128) {
           icon_size.active_id = "custom";
           icon_custome_size.set_sensitive(true);
+          icon_custome_size.value_changed.connect(() => PlankSettings.get_default ().icon_size = int.parse( icon_custome_size.value.to_string ()));
+          icon_size.halign = Gtk.Align.START;
+          icon_size.width_request = 164;
         }
-        else icon_size.active_id = current.to_string ();
+
+        icon_size.active_id = current.to_string ();
         icon_size.changed.connect (() => {
           PlankSettings.get_default ().icon_size = int.parse (icon_size.active_id);
          if (icon_size.active_id == "custom") icon_custome_size.set_sensitive(true);
          else icon_custome_size.set_sensitive(false);
           });
-        icon_custome_size.value_changed.connect(() => PlankSettings.get_default ().icon_size = int.parse( icon_custome_size.value.to_string ()));
         icon_size.halign = Gtk.Align.START;
         icon_size.width_request = 164;
 
@@ -168,8 +168,6 @@ class PlankConfigWindow : ApplicationWindow {
         hide_mode.changed.connect (() => PlankSettings.get_default ().hide_mode = int.parse (hide_mode.active_id));
         hide_mode.halign = Gtk.Align.START;
         hide_mode.width_request = 164;
-
-
 
         grid.attach (new Label ("Icon Size:"), 0, 0, 2, 1);
         grid.attach (icon_size, 2, 0, 1, 1);
