@@ -108,13 +108,6 @@ class PlankConfigWindow : ApplicationWindow {
         this.resizable = false;
         this.border_width = 10;
 
-        // Set window icon
-        try {
-            this.icon = IconTheme.get_default ().load_icon ("gtk-theme-config", 48, 0);
-        } catch (Error e) {
-            stderr.printf ("Could not load application icon: %s\n", e.message);
-        }
-
         // Methods
         create_widgets ();
     }
@@ -159,12 +152,22 @@ class PlankConfigWindow : ApplicationWindow {
         icon_size.halign = Gtk.Align.START;
         icon_size.width_request = 164;
 
-
+        var hide_mode = new Gtk.ComboBoxText ();
+        hide_mode.append ("0", "Don't hide");
+        hide_mode.append ("1", "Intelligent hide");
+        hide_mode.append ("2", "Auto hide");
+        hide_mode.append ("3", "Hide on maximize");
+        hide_mode.active_id = PlankSettings.get_default ().hide_mode.to_string ();
+        hide_mode.changed.connect (() => PlankSettings.get_default ().hide_mode = int.parse (hide_mode.active_id));
+        hide_mode.halign = Gtk.Align.START;
+        hide_mode.width_request = 164;
 
         grid.attach (new Label ("Icon Size:"), 0, 0, 2, 1);
         grid.attach (icon_size, 2, 0, 1, 1);
         grid.attach (new Label ("Custom:"), 0, 1, 2, 1);
         grid.attach (icon_custome_size, 2, 1, 1, 1);
+        grid.attach (new Label("Hide Mode:"), 0, 2, 2, 1);
+        grid.attach (hide_mode, 2, 2, 2, 1);
 
         this.add (grid);
     }
