@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.1
+Encoding=UTF-8
+Name=Plank Config
+Comment=A tool to configure Plank Dock
+Exec=plank-config
+Icon=application-default-icon
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;Settings;
