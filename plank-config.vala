@@ -1,10 +1,5 @@
 using Gtk;
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> origin/master
 public class PlankSettings : Object
 {
 
@@ -299,8 +294,4 @@ class PlankConfig : Gtk.Application {
 public static void main( string[] args ) {
   var app = new PlankConfig( );
             app.run( );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master
