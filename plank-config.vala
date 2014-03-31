@@ -139,19 +139,27 @@ class PlankConfigWindow : ApplicationWindow {
         icon_size.append ("custom", "Custom");
 
         var icon_custome_size = new Gtk.SpinButton.with_range (0, 255, 1);
+        icon_custome_size.set_sensitive(false);
         icon_custome_size.set_value (current);
 
         if (current != 32 && current != 48 && current != 64 && current != 128) {
           icon_size.active_id = "custom";
+          icon_custome_size.set_sensitive(true);
           icon_custome_size.value_changed.connect(() => PlankSettings.get_default ().icon_size = int.parse( icon_custome_size.value.to_string ()));
           icon_size.halign = Gtk.Align.START;
           icon_size.width_request = 164;
         }
 
         icon_size.active_id = current.to_string ();
-        icon_size.changed.connect (() => PlankSettings.get_default ().icon_size = int.parse (icon_size.active_id));
+        icon_size.changed.connect (() => {
+          PlankSettings.get_default ().icon_size = int.parse (icon_size.active_id);
+         if (icon_size.active_id == "custom") icon_custome_size.set_sensitive(true);
+         else icon_custome_size.set_sensitive(false);
+          });
         icon_size.halign = Gtk.Align.START;
         icon_size.width_request = 164;
+
+
 
         grid.attach (new Label ("Icon Size:"), 0, 0, 2, 1);
         grid.attach (icon_size, 2, 0, 1, 1);
