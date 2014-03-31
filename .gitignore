@@ -21,5 +21,8 @@
 *.app
 
 .fuse_*
+<<<<<<< HEAD
 *~
 plank-config
+=======
+>>>>>>> origin/master
