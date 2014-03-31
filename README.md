@@ -2,8 +2,7 @@ Plank-Config
 ============
 
 A tool to configure Plank Dock.
-<<<<<<< HEAD
-=======
+
 
 ### Introduction
 
@@ -24,5 +23,3 @@ make
 make install
 
 ### License: GPLv2
-
->>>>>>> origin/master
