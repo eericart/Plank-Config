@@ -126,13 +126,27 @@ class PlankConfigWindow : ApplicationWindow {
         grid.margin = 24;
         grid.column_homogeneous = true;
 
+        //Icons
+
+        var current = PlankSettings.get_default ().icon_size;
+
         var icon_size = new Gtk.ComboBoxText ();
+
         icon_size.append ("32", "Small");
         icon_size.append ("48", "Medium");
         icon_size.append ("64", "Large");
         icon_size.append ("128", "Extra Large");
+        icon_size.append ("custom", "Custom");
 
-        var current = PlankSettings.get_default ().icon_size;
+        var icon_custome_size = new Gtk.SpinButton.with_range (0, 255, 1);
+        icon_custome_size.set_value (current);
+
+        if (current != 32 && current != 48 && current != 64 && current != 128) {
+          icon_size.active_id = "custom";
+          icon_custome_size.value_changed.connect(() => PlankSettings.get_default ().icon_size = int.parse( icon_custome_size.value.to_string ()));
+          icon_size.halign = Gtk.Align.START;
+          icon_size.width_request = 164;
+        }
 
         icon_size.active_id = current.to_string ();
         icon_size.changed.connect (() => PlankSettings.get_default ().icon_size = int.parse (icon_size.active_id));
@@ -141,6 +155,8 @@ class PlankConfigWindow : ApplicationWindow {
 
         grid.attach (new Label ("Icon Size:"), 0, 0, 2, 1);
         grid.attach (icon_size, 2, 0, 1, 1);
+        grid.attach (new Label ("Custom:"), 0, 1, 2, 1);
+        grid.attach (icon_custome_size, 2, 1, 1, 1);
 
         this.add (grid);
     }
