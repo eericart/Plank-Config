@@ -120,11 +120,11 @@ class PlankConfigWindow : ApplicationWindow {
     }
 
     void create_widgets () {
-        var dock_grid = new Gtk.Grid ();
-        dock_grid.column_spacing = 12;
-        dock_grid.row_spacing = 6;
-        dock_grid.margin = 24;
-        dock_grid.column_homogeneous = true;
+        var grid = new Gtk.Grid ();
+        grid.column_spacing = 12;
+        grid.row_spacing = 6;
+        grid.margin = 24;
+        grid.column_homogeneous = true;
 
         var icon_size = new Gtk.ComboBoxText ();
         icon_size.append ("32", "Small");
@@ -139,10 +139,10 @@ class PlankConfigWindow : ApplicationWindow {
         icon_size.halign = Gtk.Align.START;
         icon_size.width_request = 164;
 
-        dock_grid.attach (new Label ("Icon Size:"), 0, 0, 2, 1);
-        dock_grid.attach (icon_size, 2, 0, 1, 1);
+        grid.attach (new Label ("Icon Size:"), 0, 0, 2, 1);
+        grid.attach (icon_size, 2, 0, 1, 1);
 
-        this.add (dock_grid);
+        this.add (grid);
     }
 
 
