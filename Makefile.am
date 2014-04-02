@@ -8,3 +8,7 @@ plank_config_SOURCES = plank-config.vala
 
 desktopdir = $(datadir)/applications
 desktop_DATA = plank-config.desktop
+
+
+appicondir=$(datadir)/icons/hicolor/scalable/apps
+appicon_DATA=plank-config.svg
