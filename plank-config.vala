@@ -133,11 +133,13 @@ class PlankConfigWindow : ApplicationWindow {
         this.resizable = false;
         this.border_width = 20;
 
+
         Gtk.HeaderBar headerBar = new Gtk.HeaderBar ();
         headerBar.set_title ("Plank Configuration");
         headerBar.set_show_close_button (true);
 
         this.set_titlebar(headerBar);
+
 
         // Methods
         create_widgets ();
@@ -221,6 +223,14 @@ class PlankConfigWindow : ApplicationWindow {
         theme.halign = Gtk.Align.START;
         theme.width_request = 164;
 
+        var button_install = new Gtk.Button.with_label ("install");
+        var img = new Gtk.Image.from_icon_name ("document-open", Gtk.IconSize.BUTTON);
+        button_install.set_image (img);
+        button_install.clicked.connect (() => {
+          this.install_theme();
+                    });
+
+
         var position = new Gtk.ComboBoxText ();
         position.append ("0", "Left");
         position.append ("1", "Right");
@@ -268,7 +278,8 @@ class PlankConfigWindow : ApplicationWindow {
         grid.attach (new Label("Alignment:"), 0, 5, 2, 1);
         grid.attach (alignment, 2, 5, 2, 1);
         grid.attach (new Label("Panel Alignment:"), 0, 6, 2, 1);
-        grid.attach (items_alignment, 2, 6, 2, 1);
+        grid.attach (items_alignment, 2, 4, 1, 1);
+        grid.attach (button_install, 3,3,1,1);
 
          if (theme_index > 1) {
             grid.attach (new Label ("Theme:"), 0, 3, 2, 1);
@@ -276,6 +287,11 @@ class PlankConfigWindow : ApplicationWindow {
         }
 
         this.add (grid);
+    }
+
+    void install_theme (){
+            stdout.printf ("Button 1\n");
+
     }
 
 
