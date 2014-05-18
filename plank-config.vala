@@ -145,7 +145,7 @@ class PlankConfigWindow : ApplicationWindow {
         create_widgets ();
     }
 
-    void create_widgets () {
+    private void create_widgets () {
         var grid = new Gtk.Grid ();
         grid.column_spacing = 12;
         grid.row_spacing = 12;
@@ -167,9 +167,6 @@ class PlankConfigWindow : ApplicationWindow {
         var icon_custome_size = new Gtk.SpinButton.with_range (0, 255, 1);
         icon_custome_size.set_sensitive(false);
         icon_custome_size.set_value (current);
-
-
-
 
         if (current != 32 && current != 48 && current != 64 && current != 128) {
           icon_size.active_id = "custom";
@@ -223,11 +220,12 @@ class PlankConfigWindow : ApplicationWindow {
         theme.halign = Gtk.Align.START;
         theme.width_request = 164;
 
-        var button_install = new Gtk.Button.with_label ("install");
+        var button_install = new Gtk.Button ();
         var img = new Gtk.Image.from_icon_name ("document-open", Gtk.IconSize.BUTTON);
-        button_install.set_image (img);
+        button_install.image = img;
+        button_install.label = "Install";
         button_install.clicked.connect (() => {
-          this.install_theme();
+          on_open_clicked();
                     });
 
 
@@ -289,10 +287,78 @@ class PlankConfigWindow : ApplicationWindow {
         this.add (grid);
     }
 
-    void install_theme (){
-            stdout.printf ("Button 1\n");
+    private void on_open_clicked () {
+      var file_chooser = new FileChooserDialog ("Open File", this,
+                                      FileChooserAction.OPEN,
+                                      Stock.CANCEL, ResponseType.CANCEL,
+                                      Stock.OPEN, ResponseType.ACCEPT);
+        if (file_chooser.run () == ResponseType.ACCEPT) {
+          install_theme(file_chooser.get_file());
+        }
+        file_chooser.destroy ();
+    }
+
+    private void install_theme (GLib.File file){
+            var regex = /\.(?i:zip)$/;
+            var path = file.get_path () ;
+            var name = file.get_basename() ;
+
+            if(regex.match (path)){
+              var tmp_dir ="/tmp/"+string_random();
+              Posix.system("unzip "+path+" -d "+tmp_dir);
+              string name_files_dir;
+              string theme_n = regex.replace (name,-1,0,"");
+              var theme_file = false;
+              var d = Dir.open(tmp_dir+"/"+theme_n);
+              while ((name_files_dir = d.read_name()) != null) {
+                     if (name_files_dir.to_string () == "dock.theme" ){
+                      theme_file = true;
+                      break;
+                      }
+
+              }
+              if (theme_file){
+                Posix.system("cp -r "+tmp_dir+"/"+theme_n+" "+Environment.get_user_data_dir ()+"/plank/themes");
+                send_notification(false,theme_n);
+              }
+              else{
+                send_notification();
+              }
+
+            }
+
+            else {
+              send_notification();
+            }
 
     }
+
+    private void send_notification (bool error = true, string theme_name = ""){
+
+      var summary = theme_name+" theme installed";
+      var body = "Please Restart the app for update themes";
+      var icon = "dialog-information";
+
+      if (error)
+      {
+        summary = "Invalid theme";
+      }
+      Notify.init ("Install Plank Theme");
+      Notify.Notification notification = new Notify.Notification (summary,"",icon);
+      notification.show ();
+  }
+
+    private string string_random(int length = 10, string charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"){
+    string random = "";
+
+    for(int i=0;i<length;i++){
+        int random_index = Random.int_range(0,charset.length);
+        string ch = charset.get_char(charset.index_of_nth_char(random_index)).to_string();
+        random += ch;
+    }
+
+    return random;
+}
 
 
 }
