@@ -1,4 +1,5 @@
-using Gtk;
+using Gtk,Notify;
+
 
 public class PlankSettings : Object
 {
@@ -342,10 +343,16 @@ class PlankConfigWindow : ApplicationWindow {
       if (error)
       {
         summary = "Invalid theme";
+        body ="";
       }
-      Notify.init ("Install Plank Theme");
-      Notify.Notification notification = new Notify.Notification (summary,"",icon);
+      Notify.init ("org.plankconfig.app");
+      try{
+      Notify.Notification notification = new Notify.Notification (summary,body,icon);
       notification.show ();
+      }  catch(GLib.Error e) {
+        print("%s\n", e.message);
+   }
+
   }
 
     private string string_random(int length = 10, string charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"){
