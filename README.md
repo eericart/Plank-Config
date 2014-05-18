@@ -15,6 +15,9 @@ This little tool allows anyone to change settings of Plank Dock. Based on [Switc
 `gtk3-devel >= 3.10.0`
 
 `vala >= 0.16.0`
+
+`libnotify >= 0.7.3`
+
 ### Install 
 To build and install this program:
 
