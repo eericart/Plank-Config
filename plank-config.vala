@@ -124,10 +124,13 @@ public class PlankSettings : Object
 
 
 class PlankConfigWindow : ApplicationWindow {
-
+    Intl.setlocale(LocaleCategory.MESSAGES, "");
+    Intl.textdomain(GETTEXT_PACKAGE); 
+    Intl.bind_textdomain_codeset(GETTEXT_PACKAGE, "utf-8"); 
+    Intl.bindtextdomain(GETTEXT_PACKAGE, "/usr/share/locale");
 
    internal PlankConfigWindow (PlankConfig app) {
-        Object (application: app, title: "Plank Configuration");
+        Object (_(application: app, title: "Plank Configuration"));
 
         // Set window properties
         this.window_position = WindowPosition.CENTER;
@@ -136,7 +139,7 @@ class PlankConfigWindow : ApplicationWindow {
 
 
         Gtk.HeaderBar headerBar = new Gtk.HeaderBar ();
-        headerBar.set_title ("Plank Configuration");
+        headerBar.set_title (_("Plank Configuration"));
         headerBar.set_show_close_button (true);
 
         this.set_titlebar(headerBar);
@@ -159,11 +162,11 @@ class PlankConfigWindow : ApplicationWindow {
 
         var icon_size = new Gtk.ComboBoxText ();
 
-        icon_size.append ("32", "Small");
-        icon_size.append ("48", "Medium");
-        icon_size.append ("64", "Large");
-        icon_size.append ("128", "Extra Large");
-        icon_size.append ("custom", "Custom");
+        icon_size.append (_("32", "Small"));
+        icon_size.append (_("48", "Medium"));
+        icon_size.append (_("64", "Large");
+        icon_size.append (_("128", "Extra Large"));
+        icon_size.append (_("custom", "Custom"));
 
         var icon_custome_size = new Gtk.SpinButton.with_range (0, 255, 1);
         icon_custome_size.set_sensitive(false);
@@ -184,10 +187,10 @@ class PlankConfigWindow : ApplicationWindow {
         icon_size.width_request = 164;
 
         var hide_mode = new Gtk.ComboBoxText ();
-        hide_mode.append ("0", "Don't hide");
-        hide_mode.append ("1", "Intelligent hide");
-        hide_mode.append ("2", "Auto hide");
-        hide_mode.append ("3", "Hide on maximize");
+        hide_mode.append (_("0", "Don't hide"));
+        hide_mode.append (_("1", "Intelligent hide"));
+        hide_mode.append (_("2", "Auto hide"));
+        hide_mode.append (_("3", "Hide on maximize"));
         hide_mode.active_id = PlankSettings.get_default ().hide_mode.to_string ();
         hide_mode.changed.connect (() => PlankSettings.get_default ().hide_mode = int.parse (hide_mode.active_id));
         hide_mode.halign = Gtk.Align.START;
@@ -224,17 +227,17 @@ class PlankConfigWindow : ApplicationWindow {
         var button_install = new Gtk.Button ();
         var img = new Gtk.Image.from_icon_name ("document-open", Gtk.IconSize.BUTTON);
         button_install.image = img;
-        button_install.label = "Install";
+        button_install.label = (_("Install"));
         button_install.clicked.connect (() => {
           on_open_clicked();
                     });
 
 
         var position = new Gtk.ComboBoxText ();
-        position.append ("0", "Left");
-        position.append ("1", "Right");
-        position.append ("2", "Top");
-        position.append ("3", "Buttom");
+        position.append (_("0", "Left"));
+        position.append (_("1", "Right"));
+        position.append (_("2", "Top"));
+        position.append (_("3", "Buttom"));
         position.active_id = PlankSettings.get_default ().position.to_string ();
         position.changed.connect (() => PlankSettings.get_default ().position = int.parse (position.active_id));
         position.halign = Gtk.Align.START;
@@ -243,10 +246,10 @@ class PlankConfigWindow : ApplicationWindow {
         var alignment = new Gtk.ComboBoxText ();
         var items_alignment = new Gtk.ComboBoxText ();
 
-        alignment.append ("0", "Panel");
-        alignment.append ("1", "Left");
-        alignment.append ("2", "Right");
-        alignment.append ("3", "Center");
+        alignment.append (_("0", "Panel"));
+        alignment.append (_("1", "Left"));
+        alignment.append (_("2", "Right"));
+        alignment.append (_("3", "Center"));
         alignment.active_id = PlankSettings.get_default ().alignment.to_string ();
         if (PlankSettings.get_default ().alignment == 0) items_alignment.set_sensitive(true);
         alignment.changed.connect (() =>  {
@@ -258,30 +261,30 @@ class PlankConfigWindow : ApplicationWindow {
         alignment.width_request = 164;
 
         if (PlankSettings.get_default ().alignment != 0) items_alignment.set_sensitive(false);
-        items_alignment.append ("1", "Right");
-        items_alignment.append ("2", "Left");
-        items_alignment.append ("3", "Center");
+        items_alignment.append (_("1", "Right"));
+        items_alignment.append (_("2", "Left"));
+        items_alignment.append (_("3", "Center"));
         items_alignment.active_id = PlankSettings.get_default ().items_alignment.to_string ();
         items_alignment.changed.connect (() => PlankSettings.get_default ().items_alignment = int.parse (items_alignment.active_id));
         items_alignment.halign = Gtk.Align.START;
         items_alignment.width_request = 164;
 
-        grid.attach (new Label ("Icon Size:"), 0, 0, 2, 1);
+        grid.attach (new Label (_("Icon Size:")), 0, 0, 2, 1);
         grid.attach (icon_size, 2, 0, 1, 1);
-        grid.attach (new Label ("Custom:"), 0, 1, 2, 1);
+        grid.attach (new Label (_("Custom:")), 0, 1, 2, 1);
         grid.attach (icon_custome_size, 2, 1, 1, 1);
-        grid.attach (new Label("Hide Mode:"), 0, 2, 2, 1);
+        grid.attach (new Label(_("Hide Mode:")), 0, 2, 2, 1);
         grid.attach (hide_mode, 2, 2, 2, 1);
-        grid.attach (new Label("Position:"), 0, 4, 2, 1);
+        grid.attach (new Label(_("Position:")), 0, 4, 2, 1);
         grid.attach (position, 2, 4, 2, 1);
-        grid.attach (new Label("Alignment:"), 0, 5, 2, 1);
+        grid.attach (new Label(_("Alignment:")), 0, 5, 2, 1);
         grid.attach (alignment, 2, 5, 2, 1);
-        grid.attach (new Label("Panel Alignment:"), 0, 6, 2, 1);
+        grid.attach (new Label(_("Panel Alignment:")), 0, 6, 2, 1);
         grid.attach (items_alignment, 2, 4, 1, 1);
         grid.attach (button_install, 3,3,1,1);
 
          if (theme_index > 1) {
-            grid.attach (new Label ("Theme:"), 0, 3, 2, 1);
+            grid.attach (new Label (_("Theme:")), 0, 3, 2, 1);
             grid.attach (theme, 2, 3, 1, 1);
         }
 
@@ -289,10 +292,10 @@ class PlankConfigWindow : ApplicationWindow {
     }
 
     private void on_open_clicked () {
-      var file_chooser = new FileChooserDialog ("Open File", this,
+      var file_chooser = new FileChooserDialog (_("Open File", this,
                                       FileChooserAction.OPEN,
                                       Stock.CANCEL, ResponseType.CANCEL,
-                                      Stock.OPEN, ResponseType.ACCEPT);
+                                      Stock.OPEN, ResponseType.ACCEPT));
         if (file_chooser.run () == ResponseType.ACCEPT) {
           install_theme(file_chooser.get_file());
         }
@@ -336,13 +339,13 @@ class PlankConfigWindow : ApplicationWindow {
 
     private void send_notification (bool error = true, string theme_name = ""){
 
-      var summary = theme_name+" theme installed";
-      var body = "Please Restart the app for update themes";
-      var icon = "dialog-information";
+      var summary = theme_name+(_(" theme installed"));
+      var body = (_("Please Restart the app for update themes"));
+      var icon = (_("dialog-information"));
 
       if (error)
       {
-        summary = "Invalid theme";
+        summary = (_("Invalid theme"));
         body ="";
       }
       Notify.init ("org.plankconfig.app");
