@@ -2,13 +2,14 @@
 # # Prefix bin_ tells where to copy this
 bin_PROGRAMS = plank-config
 plank_config_CFLAGS = $(gtk_CFLAGS)\
-                      `pkg-config --cflags --libs libnotify`
-plank_config_LDADD = $(gtk_LIBS)
+                      @LIBNOTIFY_CFLAGS@	\
+					  -DGETTEXT_PACKAGE=\""plank-config"\"
+plank_config_LDADD = $(gtk_LIBS)	\
+					 @LIBNOTIFY_LIBS@
 plank_config_VALAFLAGS =\
                          --pkg=gtk+-3.0 \
                          --pkg=posix \
-                         --pkg=libnotify	\
-						 -X -DGETTEXT_PACKAGE="$(GETTEXT_PACKAGE)"
+                         --pkg=libnotify
 plank_config_SOURCES = plank-config.vala
 
 desktopdir = $(datadir)/applications

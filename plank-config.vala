@@ -1,9 +1,10 @@
 using Gtk,Notify;
 
-
+/*
 [CCode (cheader_filename = "config.h,gi18n.h", 
         before_include = "gi18n.h", 
         cname = "GETTEXT_PACKAGE")]
+*/
 extern const string GETTEXT_PACKAGE;
 
 public class PlankSettings : Object
