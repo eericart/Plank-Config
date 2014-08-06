@@ -7,7 +7,8 @@ plank_config_LDADD = $(gtk_LIBS)
 plank_config_VALAFLAGS =\
                          --pkg=gtk+-3.0 \
                          --pkg=posix \
-                         --pkg=libnotify
+                         --pkg=libnotify	\
+						 -X -DGETTEXT_PACKAGE="$(GETTEXT_PACKAGE)"
 plank_config_SOURCES = plank-config.vala
 
 desktopdir = $(datadir)/applications
