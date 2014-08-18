@@ -1,8 +1,8 @@
 using Gtk,Notify;
 
 /*
-[CCode (cheader_filename = "config.h,gi18n.h", 
-        before_include = "gi18n.h", 
+[CCode (cheader_filename = "config.h,gi18n.h",
+        before_include = "gi18n.h",
         cname = "GETTEXT_PACKAGE")]
 */
 extern const string GETTEXT_PACKAGE;
@@ -287,7 +287,7 @@ class PlankConfigWindow : ApplicationWindow {
         grid.attach (new Label(_("Alignment:")), 0, 5, 2, 1);
         grid.attach (alignment, 2, 5, 2, 1);
         grid.attach (new Label(_("Panel Alignment:")), 0, 6, 2, 1);
-        grid.attach (items_alignment, 2, 4, 1, 1);
+        grid.attach (items_alignment, 2, 6, 1, 1);
         grid.attach (button_install, 3,3,1,1);
 
          if (theme_index > 1) {
@@ -366,15 +366,15 @@ class PlankConfigWindow : ApplicationWindow {
   }
 
     private string string_random(int length = 10, string charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"){
-    string random = "";
+      string random = "";
 
-    for(int i=0;i<length;i++){
+      for(int i=0;i<length;i++){
         int random_index = Random.int_range(0,charset.length);
         string ch = charset.get_char(charset.index_of_nth_char(random_index)).to_string();
         random += ch;
-    }
+      }
 
-    return random;
+      return random;
 }
 
 
