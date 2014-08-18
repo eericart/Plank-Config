@@ -151,6 +151,11 @@ class PlankConfigWindow : ApplicationWindow {
 
         this.set_titlebar(headerBar);
 
+        var about_action = new SimpleAction ("about", null);
+
+        about_action.activate.connect (this.about_cb);
+        this.add_action (about_action);
+        this.show_all ();
 
         // Methods
         create_widgets ();
@@ -298,6 +303,26 @@ class PlankConfigWindow : ApplicationWindow {
         this.add (grid);
     }
 
+    void about_cb (SimpleAction simple, Variant? parameter) {
+        var about = new Gtk.AboutDialog ();
+
+        string[] authors = { "Ernesto Ricart", null };
+        string[] documenters = { "Ernesto Ricart", null };
+        string[] contributors = { "Jeff Bai","xiangzhai", null };
+
+        about.set_program_name (_("Plank-Config"));
+        about.set_copyright (_("Copyright \xc2\xa9 2014 Ernesto Ricart"));
+        about.set_comments(_("This little tool allows anyone to change settings of Plank Dock."));
+        about.set_authors(authors);
+        about.set_logo_icon_name(_("plank-config"));
+        about.set_documenters(documenters);
+        about.set_version ("1.3.5");
+        about.add_credit_section(_("Contributors"), (string) contributors);
+        about.set_license_type(Gtk.License.GPL_2_0);
+
+        about.show_all();
+    }
+
     private void on_open_clicked () {
       var file_chooser = new FileChooserDialog (_("Open File"), this,
                                       FileChooserAction.OPEN,
@@ -379,15 +404,29 @@ class PlankConfigWindow : ApplicationWindow {
 
 
 }
+
+
 class PlankConfig : Gtk.Application {
   public PlankConfig( ) {
     Object( application_id: "org.plankconfig.app",
       flags: ApplicationFlags.FLAGS_NONE );
   }
   public override void activate( ) {
-    var window = new PlankConfigWindow (this);
-    window.show_all ();
+    var win = new PlankConfigWindow (this);
+    win.show_all ();
   }
+  protected override void startup () {
+        base.startup ();
+
+        var menu = new GLib.Menu ();
+        menu.append ("About", "win.about");
+        menu.append ("Quit", "app.quit");
+        this.app_menu = menu;
+
+        var quit_action = new SimpleAction ("quit", null);
+        quit_action.activate.connect (this.quit);
+        this.add_action (quit_action);
+    }
 }
 public static void main( string[] args ) {
   var app = new PlankConfig( );
