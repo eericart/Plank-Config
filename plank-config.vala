@@ -316,7 +316,7 @@ class PlankConfigWindow : ApplicationWindow {
         about.set_authors(authors);
         about.set_logo_icon_name(_("plank-config"));
         about.set_documenters(documenters);
-        about.set_version ("1.3.5");
+        about.set_version ("1.3.1");
         about.add_credit_section(_("Contributors"), (string) contributors);
         about.set_license_type(Gtk.License.GPL_2_0);
 
