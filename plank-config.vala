@@ -249,7 +249,7 @@ class PlankConfigWindow : ApplicationWindow {
         position.append ("0", _("Left"));
         position.append ("1", _("Right"));
         position.append ("2", _("Top"));
-        position.append ("3", _("Buttom"));
+        position.append ("3", _("Bottom"));
         position.active_id = PlankSettings.get_default ().position.to_string ();
         position.changed.connect (() => PlankSettings.get_default ().position = int.parse (position.active_id));
         position.halign = Gtk.Align.START;
