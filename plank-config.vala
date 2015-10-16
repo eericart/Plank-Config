@@ -203,6 +203,7 @@ class PlankConfigWindow : ApplicationWindow {
         hide_mode.append ("1", _("Intelligent hide"));
         hide_mode.append ("2", _("Auto hide"));
         hide_mode.append ("3", _("Hide on maximize"));
+        hide_mode.append ("4", _("Window dodge"));
         hide_mode.active_id = PlankSettings.get_default ().hide_mode.to_string ();
         hide_mode.changed.connect (() => PlankSettings.get_default ().hide_mode = int.parse (hide_mode.active_id));
         hide_mode.halign = Gtk.Align.START;
@@ -249,7 +250,7 @@ class PlankConfigWindow : ApplicationWindow {
         position.append ("0", _("Left"));
         position.append ("1", _("Right"));
         position.append ("2", _("Top"));
-        position.append ("3", _("Buttom"));
+        position.append ("3", _("Bottom"));
         position.active_id = PlankSettings.get_default ().position.to_string ();
         position.changed.connect (() => PlankSettings.get_default ().position = int.parse (position.active_id));
         position.halign = Gtk.Align.START;
